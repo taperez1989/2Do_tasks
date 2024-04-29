@@ -22,8 +22,13 @@ function randomId() {
 };
 
 // created click event for the random ID
+
+
 addTaskBtnEl.addEventListener('click', function () {
     const newLetterId = randomId();
+    const modalContainer = document.querySelector('modal-container');
+    modalContainer.classList.add('modal-container');
+
     console.log(newLetterId);
 });
 
@@ -72,6 +77,8 @@ submitTask.addEventListener('click', function (event) {
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
     const taskList = document.getElementById('todo-cards');
+    // let taskList = JSON.parse(localStorage.getItem("tasks"));
+
 
     // this clears the task list of any existing content
     taskList.innerHTML = '';

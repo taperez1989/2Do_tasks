@@ -25,14 +25,18 @@
       <button class="btn btn-success addTask" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
     </div>
     <!-- Todo: Create a modal with a form to add tasks -->
-    <div>
-      <label>title</label>
-      <input id="title"></input>
-      <label>date</label>
-      <input id="date"></input>
-      <label>description</label>
-      <input id="description"></input>
-      <button id="submit" type="submit">submit</button>
+    <div class="modal-container">
+      <div class="modal-content">
+        <label>title</label>
+        <input id="title"></input>
+        <label>date</label>
+        <input id="date"></input>
+        <label>description</label>
+        <input id="description"></input>
+        <div class="modal-footer">
+        <button id="submit" type="submit">submit</button>
+        </div>
+      </div>
     </div>
     <div class="row swim-lanes text-center justify-content-between">
       <div class="col-12 col-lg-4 d-flex">
