@@ -12,6 +12,7 @@ function generateTaskId() {
   
 };
 
+// creates a random lettered ID for the task cards
 function randomId() {
     let letterId = '';
     for (let i = 0; i < 4; i++) {
@@ -20,44 +21,76 @@ function randomId() {
     return letterId;
 };
 
+// created click event for the random ID
 addTaskBtnEl.addEventListener('click', function () {
     const newLetterId = randomId();
     console.log(newLetterId);
 });
 
-console.log(randomId);
+// console.log(randomId);
 
 
 // Todo: create a function to create a task card
-const title = document.querySelector('.title');
-const date = document.querySelector('.date');
-const description = document.querySelector('.description');
-const submitTask = document.querySelector('.submit');
+
+const submitTask = document.getElementById('submit');
 
 function createTaskCard() {
-    let task = {
+    const tasks = {
         taskTitle: title.value,
         dateDate: date.value,
         taskDescription: description.value,
         taskId: randomId()
     };
-localStorage.setItem('task', JSON.stringify(task))
-}
+
+    const task = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    task.push(tasks);
+
+    // sets values of the oject in local storage
+    localStorage.setItem('task', JSON.stringify(tasks));
+
+};
 
 submitTask.addEventListener('click', function (event) {
     event.preventDefault();
 
-    console.log("submitTask");
+    const taskTitle = document.getElementById('title').value;
+    const dateDate = document.getElementById('date').value;
+    const taskDescription = document.getElementById('description').value;
+
+    // if task list form has no content in it, function alerts user to add a task
+    if (taskTitle === '' || dateDate === '' || taskDescription === '') {
+        window.alert("Add task");
+
+        return;
+    };
+
     createTaskCard();
-})
+});
+
+
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
+    const taskList = document.getElementById('todo-cards');
 
-}
+    // this clears the task list of any existing content
+    taskList.innerHTML = '';
+
+    tasks.forEach(tasks => {
+        const taskCard = document.createElement('div');
+        taskCard.classList.add('task-card');
+        taskCard.textContent = tasks.tasks;
+
+        taskList.appendChild(taskCard);
+    });
+
+    renderTaskList();
+};
+console.log(renderTaskList);
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event){
-
+    event.preventDefault();
 }
 
 // Todo: create a function to handle deleting a task
@@ -75,5 +108,5 @@ $(document).ready(function () {
    
     let random = randomId();
 
-    console.log(random);
+    // console.log(random);
 });
