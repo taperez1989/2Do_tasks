@@ -15,10 +15,10 @@ body {
   cursor: grab;
 }
 
-.modal-container {
+/* .modal-container {
   display: none;
   position: fixed;
   z-index: 1;
 
-}
+} */
 

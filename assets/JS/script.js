@@ -1,5 +1,6 @@
 // Retrieve tasks and nextId from localStorage
-let taskList = JSON.parse(localStorage.getItem("tasks"));
+let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
+console.log(taskList);
 let nextId = JSON.parse(localStorage.getItem("nextId"));
 const addTaskBtnEl = document.querySelector('.addTask');
 // Todo: create a function to generate a unique task id
@@ -37,26 +38,27 @@ addTaskBtnEl.addEventListener('click', function () {
 
 // Todo: create a function to create a task card
 
-const submitTask = document.getElementById('submit');
+const taskForm = document.getElementById('taskForm');
 
-function createTaskCard() {
-    const tasks = {
-        taskTitle: title.value,
-        dateDate: date.value,
-        taskDescription: description.value,
+function createTaskCard(task,date,description) {
+    console.log("insidecreatetaskcard");
+    const singleTask = {
+        taskTitle: task,
+        dateDate: date,
+        taskDescription: description,
         taskId: randomId()
     };
 
-    const task = JSON.parse(localStorage.getItem("tasks")) || [];
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-    task.push(tasks);
+    tasks.push(singleTask);
 
     // sets values of the oject in local storage
-    localStorage.setItem('task', JSON.stringify(tasks));
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 
 };
 
-submitTask.addEventListener('click', function (event) {
+taskForm.addEventListener('submit', function (event) {
     event.preventDefault();
 
     const taskTitle = document.getElementById('title').value;
@@ -69,31 +71,31 @@ submitTask.addEventListener('click', function (event) {
 
         return;
     };
-
-    createTaskCard();
+    createTaskCard(taskTitle, dateDate, taskDescription);
 });
 
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
-    const taskList = document.getElementById('todo-cards');
+    // const taskList = document.getElementById('todo-cards');
     // let taskList = JSON.parse(localStorage.getItem("tasks"));
 
 
     // this clears the task list of any existing content
-    taskList.innerHTML = '';
+    // taskList.innerHTML = '';
 
-    tasks.forEach(tasks => {
-        const taskCard = document.createElement('div');
-        taskCard.classList.add('task-card');
-        taskCard.textContent = tasks.tasks;
+    taskList.forEach(task => {
+        console.log(task);
+        // const taskCard = document.createElement('div');
+        // taskCard.classList.add('task-card');
+        // taskCard.textContent = tasks.tasks;
 
-        taskList.appendChild(taskCard);
+        // taskList.appendChild(taskCard);
     });
 
-    renderTaskList();
+    // renderTaskList();
 };
-console.log(renderTaskList);
+console.log(renderTaskList());
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event){
