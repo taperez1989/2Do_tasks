@@ -1,4 +1,5 @@
 // Retrieve tasks and nextId from localStorage
+$(document).ready(function () {
 let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 console.log(taskList);
 let nextId = JSON.parse(localStorage.getItem("nextId"));
@@ -25,7 +26,7 @@ function randomId() {
 
 // Todo: create a function to create a task card
 
-const taskForm = document.getElementById('taskForm');
+const submitButton = document.getElementById('submit');
 
 function createTaskCard(task,date,description) {
     
@@ -45,9 +46,9 @@ function createTaskCard(task,date,description) {
 
 };
 
-taskForm.addEventListener('submit', function (event) {
+submitButton.addEventListener('click', function (event) {
     event.preventDefault();
-
+    
     const taskTitle = document.getElementById('title').value;
     const dateDate = document.getElementById('date').value;
     const taskDescription = document.getElementById('description').value;
@@ -63,11 +64,10 @@ taskForm.addEventListener('submit', function (event) {
     renderTaskList();
 });
 
-
-// Todo: create a function to render the task list and make cards draggable
-function renderTaskList() {
+    function renderTaskList() {
+    // Todo: create a function to render the task list and make cards draggable
     const taskContainer = document.getElementById('todo-cards');
-    let taskList = JSON.parse(localStorage.getItem("tasks"));
+        let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 
 
     // this clears the task list of any existing content
@@ -75,46 +75,21 @@ function renderTaskList() {
 
     // loop for rendering task card
     taskList.forEach(task => {
-        
-        const taskCard = document.createElement('div');
-        const letterId = document.createElement('h6');
-        const taskTitle = document.createElement('h2');
-        const dateDate = document.createElement('h3');
-        const taskDescription = document.createElement('p');
-        const deleteBtn = document.createElement('button');
-        
-        taskCard.classList.add('task-card');
+        const taskCard = $('<div class="task-card"></div>');
+        const letterId = $('<h6></h6>').text(task.taskId);
+        const taskTitle = $('<h2></h2>').text(task.taskTitle);
+        const dateDate = $('<h3></h3>').text(task.taskDescription);
+        const taskDescription = $('<p></p>').text(task.dateDate);
+        const deleteBtn = $('<button>Delete Task</button>');
 
-        letterId.textContent = task.taskId;
-        taskTitle.textContent = task.taskTitle;
-        dateDate.textContent = task.taskDescription;
-        taskDescription.textContent = task.dateDate;
-        deleteBtn.textContent = "Delete Task"
-        
-
-        taskContainer.append(taskCard);
         taskCard.append(letterId, taskTitle, dateDate, taskDescription, deleteBtn);
+        $('#todo-cards').append(taskCard);
+
+        // Make task card draggable
+        taskCard.draggable();
     });
-};
+}
 
-
-// Todo: create a function to handle adding a new task
-const closeButton = document.querySelector('.close');
-
-const modalOverlay = document.querySelector('.modal-content');
-
-addTaskBtnEl.addEventListener('click', showModal);
-
-function showModal() {
-    modalOverlay.style.display = 'block';
-
-};
-
-closeButton.addEventListener('click', hideModal);
-
-function hideModal() {
-    modalOverlay.style.display = 'none';
-};
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
@@ -130,4 +105,6 @@ function handleDrop(event, ui) {
 // $(document).ready(function () {
    
 
-// });
+    // });
+    renderTaskList()
+});
