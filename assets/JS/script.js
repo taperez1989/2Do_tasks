@@ -22,26 +22,13 @@ function randomId() {
     return letterId;
 };
 
-// created click event for the random ID
-
-
-addTaskBtnEl.addEventListener('click', function () {
-    const newLetterId = randomId();
-    const modalContainer = document.querySelector('modal-container');
-    modalContainer.classList.add('modal-container');
-
-    console.log(newLetterId);
-});
-
-// console.log(randomId);
-
 
 // Todo: create a function to create a task card
 
 const taskForm = document.getElementById('taskForm');
 
 function createTaskCard(task,date,description) {
-    console.log("insidecreatetaskcard");
+    
     const singleTask = {
         taskTitle: task,
         dateDate: date,
@@ -72,35 +59,62 @@ taskForm.addEventListener('submit', function (event) {
         return;
     };
     createTaskCard(taskTitle, dateDate, taskDescription);
+
+    renderTaskList();
 });
 
 
 // Todo: create a function to render the task list and make cards draggable
 function renderTaskList() {
-    // const taskList = document.getElementById('todo-cards');
-    // let taskList = JSON.parse(localStorage.getItem("tasks"));
+    const taskContainer = document.getElementById('todo-cards');
+    let taskList = JSON.parse(localStorage.getItem("tasks"));
 
 
     // this clears the task list of any existing content
-    // taskList.innerHTML = '';
+    taskContainer.innerHTML = '';
 
+    // loop for rendering task card
     taskList.forEach(task => {
-        console.log(task);
-        // const taskCard = document.createElement('div');
-        // taskCard.classList.add('task-card');
-        // taskCard.textContent = tasks.tasks;
+        
+        const taskCard = document.createElement('div');
+        const letterId = document.createElement('h6');
+        const taskTitle = document.createElement('h2');
+        const dateDate = document.createElement('h3');
+        const taskDescription = document.createElement('p');
+        const deleteBtn = document.createElement('button');
+        
+        taskCard.classList.add('task-card');
 
-        // taskList.appendChild(taskCard);
+        letterId.textContent = task.taskId;
+        taskTitle.textContent = task.taskTitle;
+        dateDate.textContent = task.taskDescription;
+        taskDescription.textContent = task.dateDate;
+        deleteBtn.textContent = "Delete Task"
+        
+
+        taskContainer.append(taskCard);
+        taskCard.append(letterId, taskTitle, dateDate, taskDescription, deleteBtn);
     });
-
-    // renderTaskList();
 };
-console.log(renderTaskList());
+
 
 // Todo: create a function to handle adding a new task
-function handleAddTask(event){
-    event.preventDefault();
-}
+const closeButton = document.querySelector('.close');
+
+const modalOverlay = document.querySelector('.modal-content');
+
+addTaskBtnEl.addEventListener('click', showModal);
+
+function showModal() {
+    modalOverlay.style.display = 'block';
+
+};
+
+closeButton.addEventListener('click', hideModal);
+
+function hideModal() {
+    modalOverlay.style.display = 'none';
+};
 
 // Todo: create a function to handle deleting a task
 function handleDeleteTask(event){
@@ -113,9 +127,7 @@ function handleDrop(event, ui) {
 }
 
 // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
-$(document).ready(function () {
+// $(document).ready(function () {
    
-    let random = randomId();
 
-    // console.log(random);
-});
+// });
