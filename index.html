@@ -22,27 +22,16 @@
   </header>
   <div class="container">
     <div class="text-center mb-5">
-      <!-- <button class="btn btn-success addTask" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button> -->
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">
-      Add Task
-      </button>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formModal">Add Task</button>
     </div>
     <!-- Todo: Create a modal with a form to add tasks -->
-    <!-- <div class="modal-container modal" id="formModal" tabindex="-1" aria-labelledby="formModal" aria-hidden="true">
-      <div class="modal-content">
-        
-      </div>
-    </div> -->
     <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="formModalLabel">Task</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      
-          </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
           <div class="modal-body">
-            <!-- <span class="close">&times;</span> -->
             <form id="taskForm">
               <label>Title</label>
               <input id="title"></input>
@@ -61,32 +50,32 @@
     </div>
     <div class="row swim-lanes text-center justify-content-between">
       <div class="col-12 col-lg-4 d-flex">
-        <div id="to-do" class="card border-light mb-3 lane flex-grow-1">
+        <div id="to-do" class="card border-light mb-3 flex-grow-1">
           <div class="card-header bg-white">
             <h2 class="card-title mb-1">To Do</h2>
           </div>
           <div class="card-body bg-light">
-            <div id="todo-cards"></div>
+            <div id="todo-cards" class="lane"></div>
           </div>
         </div>
       </div>
       <div class="col-12 col-lg-4 d-flex">
-        <div id="in-progress" class="card border-light mb-3 lane flex-grow-1">
+        <div id="in-progress" class="card border-light mb-3 flex-grow-1">
           <div class="card-header bg-white">
             <h2 class="card-title mb-1">In Progress</h2>
           </div>
           <div class="card-body bg-light">
-            <div id="in-progress-cards"></div>
+            <div id="in-progress-cards" class="lane"></div>
           </div>
         </div>
       </div>
       <div class="col-12 col-lg-4 d-flex">
-        <div id="done" class="card border-light mb-3 lane flex-grow-1">
+        <div id="done" class="card border-light mb-3 flex-grow-1">
           <div class="card-header bg-white">
             <h2 class="card-title mb-1">Done</h2>
           </div>
           <div class="card-body bg-light">
-            <div id="done-cards"></div>
+            <div id="done-cards" class="lane"></div>
           </div>
         </div>
       </div>
