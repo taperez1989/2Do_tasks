@@ -44,6 +44,7 @@ $(document).ready(function () {
             taskTitle: task,
             dateDate: date,
             taskDescription: description,
+            status: 'to-do',
             taskId: randomId()
         };
 
@@ -78,16 +79,35 @@ $(document).ready(function () {
 
     function renderTaskList() {
         // Todo: create a function to render the task list and make cards draggable
-        const taskContainer = document.getElementById('todo-cards');
+        const taskContainer = $('#todo-cards');
         let taskList = JSON.parse(localStorage.getItem("tasks")) || [];
 
+        const inProgress = $('#in-progress-cards');
+        const done = $('#done-cards');
 
+        taskContainer.empty();
+        inProgress.empty();
+        done.empty();
+        
         // this clears the task list of any existing content
         taskContainer.innerHTML = '';
 
         // loop for rendering task card
         taskList.forEach(task => {
-            const taskCard = $('<div class="task-card draggable"></div>');
+            let containerForCard
+            switch (task.status) {
+                case 'to-do':
+                    containerForCard = taskContainer
+                    break
+                case 'in-progress':
+                    containerForCard = inProgress
+                    break
+                case 'done':
+                    containerForCard = done
+                    break
+                
+            }
+            const taskCard = $(`<div class="task-card draggable" data-taskid='${task.taskId}'></div>`);
             const letterId = $('<h6></h6>').text(task.taskId);
             const taskTitle = $('<h2></h2>').text(task.taskTitle);
             const dateDate = $('<h3></h3>').text(task.taskDescription);
@@ -95,25 +115,29 @@ $(document).ready(function () {
             const deleteBtn = $('<button>Delete Task</button>');
 
             taskCard.append(letterId, taskTitle, dateDate, taskDescription, deleteBtn);
-            $('#todo-cards').append(taskCard);
+            containerForCard.append(taskCard);
+            console.log(taskCard);
+            console.log(letterId, taskTitle, dateDate, taskDescription, deleteBtn);
             deleteBtn.on('click', handleDeleteTask);
 
             // Make task card draggable
-            taskCard.draggable({
-                opacity: 0.7,
-                zIndex: 100,
-                
-                helper: function (e) {
-                    const original = $(e.target).hasClass('ui-draggable')
-                        ? $(e.target)
-                        : $(e.target).closest('.ui-draggable');
-                    
-                    return original.clone().css({
-                        width: original.outerWidth(),
-                    });
-                }
-            });
+        
             
+        });
+
+        $('.draggable').draggable({
+            opacity: 0.7,
+            zIndex: 100,
+
+            helper: function (e) {
+                const original = $(e.target).hasClass('ui-draggable')
+                    ? $(e.target)
+                    : $(e.target).closest('.ui-draggable');
+
+                return original.clone().css({
+                    width: original.outerWidth(),
+                });
+            }
         });
     };
 
@@ -138,9 +162,27 @@ $(document).ready(function () {
     function handleDrop(event, ui) {
         // const Projects = createTaskCard();
 
-        const columnName = ui.draggable[0].dataset.taskId
+        const draggableId = ui.draggable[0].dataset.taskid
+
+        const columnName = event.target.id
+
+        let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+        console.log(draggableId);
+        console.log(columnName);
+
+        const updatedTasks = tasks.map(function (task) {
+            if (draggableId === task.taskId) {
+                task.status = columnName
+                
+                return task;
+            }
+            return task;
+        })
     
-        console.log(columnName)
+        localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+
+        renderTaskList();
     }
 
     // Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
